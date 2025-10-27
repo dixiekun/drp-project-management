@@ -44,7 +44,7 @@ export function AskAIDialog({ projectId, projectName }: AskAIDialogProps) {
       const response = await askAI(projectId, userQuestion);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: response.answer },
+        { role: "assistant", content: response.answer || "No response" },
       ]);
     } catch (error) {
       toast.error("Failed to get AI response");
