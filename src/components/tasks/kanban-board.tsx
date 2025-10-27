@@ -44,7 +44,12 @@ export function KanbanBoard({ tasks, onTasksChange }: KanbanBoardProps) {
 
               <div className="flex-1 space-y-2 min-h-[200px] p-3 rounded-lg bg-muted/20">
                 {columnTasks.map((task) => (
-                  <TaskCard key={task.id} task={task} onClick={() => setEditingTask(task)} />
+                  <TaskCard
+                    key={task.id}
+                    task={task}
+                    onClick={() => setEditingTask(task)}
+                    projectName={(task as any).project?.name}
+                  />
                 ))}
                 {columnTasks.length === 0 && (
                   <div className="flex items-center justify-center h-32 text-sm text-muted-foreground">

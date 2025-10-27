@@ -9,9 +9,10 @@ import type { Task } from "@/db/schema";
 interface TaskCardProps {
   task: Task;
   onClick?: () => void;
+  projectName?: string;
 }
 
-export function TaskCard({ task, onClick }: TaskCardProps) {
+export function TaskCard({ task, onClick, projectName }: TaskCardProps) {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -95,6 +96,11 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
                   ?
                 </AvatarFallback>
               </Avatar>
+            )}
+            {projectName && (
+              <Badge variant="outline" className="text-xs bg-muted/50">
+                {projectName}
+              </Badge>
             )}
             {task.timeEstimate && (
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
