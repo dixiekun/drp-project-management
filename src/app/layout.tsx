@@ -6,8 +6,17 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Project Management - Freelance Web Design",
+  title: "DRP Project Management",
   description: "Client and project management for freelance web designers",
+  icons: {
+    icon: [
+      {
+        url: "/logo-2025.svg",
+        type: "image/svg+xml",
+        sizes: "32x32",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
