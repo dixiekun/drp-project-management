@@ -94,7 +94,7 @@ export function AskAIDialog({ projectId, projectName }: AskAIDialogProps) {
                     Start a conversation with AI
                   </p>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Example: "What's the status of this project?" or "Summarize the project documents"
+                    Example: &quot;What&apos;s the status of this project?&quot; or &quot;Summarize the project documents&quot;
                   </p>
                 </div>
               </div>
