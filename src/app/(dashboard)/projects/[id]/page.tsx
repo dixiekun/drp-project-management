@@ -49,6 +49,7 @@ export default function ProjectDetailPage() {
 
   const loadProject = async () => {
     try {
+      setIsLoading(true);
       const projectData = await getProjectById(params.id as string);
 
       if (projectData) {
@@ -72,7 +73,10 @@ export default function ProjectDetailPage() {
   };
 
   useEffect(() => {
-    loadProject();
+    if (params.id) {
+      loadProject();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
   const handleDelete = async () => {
