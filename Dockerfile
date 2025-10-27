@@ -36,8 +36,8 @@ COPY --from=builder /app/.next/static ./.next/static
 # CRITICAL: Copy libsql native module for Alpine
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@libsql ./node_modules/@libsql
 
-# Create data directory for SQLite
-RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
+# Create data directory for SQLite and .next/cache
+RUN mkdir -p /app/data /app/.next/cache && chown -R nextjs:nodejs /app/data /app/.next
 
 USER nextjs
 
