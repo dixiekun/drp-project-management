@@ -37,7 +37,7 @@ Project Context:
 
 ${projectDocs.length > 0 ? `
 Project Documents:
-${projectDocs.map((doc, i) => `
+${projectDocs.map((doc: { id: string; name: string; content: string | null }, i: number) => `
 Document ${i + 1}: ${doc.name}
 ${doc.content ? `Content: ${doc.content.substring(0, 1000)}...` : "Content not available"}
 `).join("\n")}
