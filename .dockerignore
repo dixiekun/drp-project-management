@@ -1,0 +1,15 @@
+node_modules
+.next
+.git
+.gitignore
+.env*.local
+.env
+data
+*.db
+*.db-shm
+*.db-wal
+dump.sql
+README.md
+planning
+Dixie_Master_Prompt_Updated.pdf
+CLAUDE.md
