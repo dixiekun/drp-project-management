@@ -24,16 +24,17 @@ export const documents = sqliteTable("documents", {
     .$defaultFn(() => new Date()),
 });
 
-export const documentsRelations = relations(documents, ({ one }) => ({
-  project: one(projects, {
-    fields: [documents.projectId],
-    references: [projects.id],
-  }),
-  uploadedByUser: one(users, {
-    fields: [documents.uploadedBy],
-    references: [users.id],
-  }),
-}));
+// ALL relations removed - they cause queries to hang
+// export const documentsRelations = relations(documents, ({ one }) => ({
+//   project: one(projects, {
+//     fields: [documents.projectId],
+//     references: [projects.id],
+//   }),
+//   uploadedByUser: one(users, {
+//     fields: [documents.uploadedBy],
+//     references: [users.id],
+//   }),
+// }));
 
 export type Document = typeof documents.$inferSelect;
 export type NewDocument = typeof documents.$inferInsert;

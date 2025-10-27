@@ -36,13 +36,14 @@
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "react-hook-form": "^7.51.0",
+    "react-markdown": "^10.1.0",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.0",
     "zod": "^3.22.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

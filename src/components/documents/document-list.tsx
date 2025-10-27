@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import type { Document } from "@/db/schema";
 
 interface DocumentListProps {
-  documents: Array<Document & { uploadedByUser: { name: string | null } }>;
+  documents: Array<Document>;
   onUpdate: () => void;
 }
 
@@ -74,12 +74,6 @@ export function DocumentList({ documents, onUpdate }: DocumentListProps) {
                       <span>
                         {new Date(doc.createdAt).toLocaleDateString()}
                       </span>
-                      {doc.uploadedByUser.name && (
-                        <>
-                          <span>•</span>
-                          <span>{doc.uploadedByUser.name}</span>
-                        </>
-                      )}
                     </div>
                   </div>
                   {doc.content && (

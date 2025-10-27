@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Sparkles, Send, Loader2 } from "lucide-react";
 import { askAI } from "@/actions/ai";
 import { toast } from "sonner";
+import ReactMarkdown from "react-markdown";
 
 interface AskAIDialogProps {
   projectId: string;
@@ -118,7 +119,13 @@ export function AskAIDialog({ projectId, projectName }: AskAIDialogProps) {
                       AI Assistant
                     </Badge>
                   )}
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                  {message.role === "user" ? (
+                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                  ) : (
+                    <div className="text-sm prose prose-sm dark:prose-invert max-w-none">
+                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

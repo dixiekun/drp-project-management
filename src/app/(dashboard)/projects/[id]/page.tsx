@@ -50,24 +50,31 @@ export default function ProjectDetailPage() {
   const loadProject = async () => {
     try {
       setIsLoading(true);
+      console.log("Loading project:", params.id);
+
       const projectData = await getProjectById(params.id as string);
+      console.log("Project data:", projectData);
 
       if (projectData) {
         setProject(projectData as ProjectWithClient);
 
         const tasksData = await getTasksByProjectId(params.id as string);
+        console.log("Tasks data:", tasksData);
         setTasks(tasksData as Task[]);
 
         const docsData = await getDocumentsByProjectId(params.id as string);
+        console.log("Docs data:", docsData);
         setDocuments(docsData);
       } else {
+        console.error("Project not found");
         toast.error("Project not found");
         router.push("/projects");
       }
     } catch (error) {
       console.error("Failed to load project:", error);
-      toast.error("Failed to load project");
+      toast.error(`Failed to load project: ${error}`);
     } finally {
+      console.log("Setting isLoading to false");
       setIsLoading(false);
     }
   };

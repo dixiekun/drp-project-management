@@ -2,9 +2,10 @@
 
 import { GoogleGenAI } from "@google/genai";
 import { db } from "@/db";
-import { projects, documents } from "@/db/schema";
+import { projects } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
+import { getDocumentsWithContentByProjectId } from "./documents";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -22,10 +23,8 @@ export async function askAI(projectId: string, question: string) {
 
   if (!project) throw new Error("Project not found");
 
-  // Get project documents
-  const projectDocs = await db.query.documents.findMany({
-    where: eq(documents.projectId, projectId),
-  });
+  // Get project documents with content (only when needed for AI)
+  const projectDocs = await getDocumentsWithContentByProjectId(projectId);
 
   // Build context from project and documents
   const context = `
