@@ -83,10 +83,10 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
 
         <div className="flex items-center justify-between pt-2 border-t">
           <div className="flex items-center gap-2">
-            {task.assignee ? (
+            {task.assigneeId ? (
               <Avatar className="h-6 w-6">
                 <AvatarFallback className="text-xs bg-primary text-primary-foreground">
-                  {getInitials(task.assignee.name)}
+                  {getInitials(task.assigneeId)}
                 </AvatarFallback>
               </Avatar>
             ) : (
@@ -95,11 +95,6 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
                   ?
                 </AvatarFallback>
               </Avatar>
-            )}
-            {task.project && (
-              <Badge variant="outline" className="text-xs bg-muted/50">
-                {task.project.name}
-              </Badge>
             )}
             {task.timeEstimate && (
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
