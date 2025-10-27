@@ -35,7 +35,6 @@ Project Context:
 - Description: ${project.description || "No description"}
 - Status: ${project.status}
 - Priority: ${project.priority}
-- Budget: ${project.budget || "Not specified"}
 
 ${projectDocs.length > 0 ? `
 Project Documents:
