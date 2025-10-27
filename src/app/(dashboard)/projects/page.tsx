@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,24 +21,16 @@ type ProjectWithClient = Project & {
 };
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState<ProjectWithClient[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  const loadProjects = async () => {
-    try {
+  const { data: projects = [], isLoading } = useQuery({
+    queryKey: ["projects"],
+    queryFn: async () => {
       const data = await getProjects();
-      setProjects(data as ProjectWithClient[]);
-    } catch (error) {
-      console.error("Failed to load projects:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadProjects();
-  }, []);
+      return data as ProjectWithClient[];
+    },
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -83,7 +76,7 @@ export default function ProjectsPage() {
   const handleFormClose = (open: boolean) => {
     setIsFormOpen(open);
     if (!open) {
-      loadProjects();
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     }
   };
 

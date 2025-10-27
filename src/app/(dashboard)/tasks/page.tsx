@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { TaskForm } from "@/components/tasks/task-form";
@@ -11,30 +12,26 @@ import { Toaster } from "sonner";
 import type { Task } from "@/db/schema";
 
 export default function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  const loadTasks = async () => {
-    try {
+  const { data: tasks = [], isLoading } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
       const data = await getTasks();
-      setTasks(data as Task[]);
-    } catch (error) {
-      console.error("Failed to load tasks:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadTasks();
-  }, []);
+      return data as Task[];
+    },
+  });
 
   const handleFormClose = (open: boolean) => {
     setIsFormOpen(open);
     if (!open) {
-      loadTasks();
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     }
+  };
+
+  const handleTasksChange = () => {
+    queryClient.invalidateQueries({ queryKey: ["tasks"] });
   };
 
   return (
@@ -81,7 +78,7 @@ export default function TasksPage() {
             </div>
           </Card>
         ) : (
-          <KanbanBoard tasks={tasks} onTasksChange={loadTasks} />
+          <KanbanBoard tasks={tasks} onTasksChange={handleTasksChange} />
         )}
       </div>
 

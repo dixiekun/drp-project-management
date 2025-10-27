@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,24 +13,13 @@ import { Toaster } from "sonner";
 import type { Client } from "@/db/schema";
 
 export default function ClientsPage() {
-  const [clients, setClients] = useState<Client[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  const loadClients = async () => {
-    try {
-      const data = await getClients();
-      setClients(data);
-    } catch (error) {
-      console.error("Failed to load clients:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadClients();
-  }, []);
+  const { data: clients = [], isLoading } = useQuery({
+    queryKey: ["clients"],
+    queryFn: async () => await getClients(),
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -58,7 +48,7 @@ export default function ClientsPage() {
   const handleFormClose = (open: boolean) => {
     setIsFormOpen(open);
     if (!open) {
-      loadClients(); // Refresh clients after form closes
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
     }
   };
 
