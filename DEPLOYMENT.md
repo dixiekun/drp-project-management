@@ -53,15 +53,37 @@ This creates a 1GB volume in Singapore (closest to Philippines).
 ~/.fly/bin/flyctl deploy
 ```
 
-### 6. Initialize Database
+### 6. Database Setup (Choose One)
 
-After first deployment, SSH into the machine and run migrations:
+**Option A: Start Fresh (Empty Database)**
+
+SSH into the machine and run migrations:
 
 ```bash
 ~/.fly/bin/flyctl ssh console
 cd /app
-node_modules/.bin/drizzle-kit push
+npx drizzle-kit push
 exit
+```
+
+**Option B: Upload Your Existing Database**
+
+Use the deployment script to upload your local database:
+
+```bash
+./scripts/deploy-with-data.sh
+```
+
+Or manually:
+
+```bash
+# After deploying, upload your database
+~/.fly/bin/flyctl ssh sftp shell
+put data/local.db /app/data/local.db
+exit
+
+# Restart the app
+~/.fly/bin/flyctl apps restart drp-project-management
 ```
 
 ## CI/CD Setup with GitHub Actions
