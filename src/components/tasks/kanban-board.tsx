@@ -42,7 +42,7 @@ export function KanbanBoard({ tasks, onTasksChange }: KanbanBoardProps) {
                 </Badge>
               </div>
 
-              <div className="flex-1 space-y-2 min-h-[200px] p-3 rounded-lg bg-muted/20">
+              <div className="flex-1 space-y-2 min-h-[200px] p-4 rounded-lg bg-gray-100/80 dark:bg-gray-800/50">
                 {columnTasks.map((task) => (
                   <TaskCard
                     key={task.id}
